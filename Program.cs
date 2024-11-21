@@ -219,5 +219,61 @@ class Program
 
         // Генерация отчетов
         library.GenerateReport();
+
+        // Вывод диаграммы компонентов
+        PrintComponentDiagram();
+
+        static void PrintComponentDiagram()
+        {
+            Console.WriteLine(@"
++-------------------+             +-------------------+
+|      Library      |<----------->|       User        |
+|-------------------|             |-------------------|
+| + AddBook()       |             | + Register()      |
+| + RemoveBook()    |             | + Login()         |
+| + SearchBook()    |             |-------------------|
+| + GenerateReport()|             | [Reader]          |
+|                   |             |  + BorrowBook()   |
+|                   |             |  + ReturnBook()   |
+|                   |             | [Librarian]       |
+|                   |             |  + IssueBook()    |
+|                   |             |  + ReturnBook()   |
++-------------------+             +-------------------+
+
+           |                             ^
+           |                             |
+           v                             |
++-------------------+                   [Loan]
+|      Catalog      |<------------------+----------------------+
+|-------------------|                   |  + IssueLoan()       |
+| + SearchBooks()   |                   |  + ReturnLoan()      |
+| + FilterBooks()   |                   |  + ManageTransactions|
++-------------------+                   +----------------------+
+           |
+           |
+           v
++-------------------+   
+|       Book        |
+|-------------------|
+| + ChangeStatus()  |
+| + GetInfo()       |
++-------------------+
+
++-------------------+   
+|      Report       |<----------------------------------------+
+|-------------------|                                         |
+| + GenerateReport()|                                         |
+| + DisplayStats()  |                                         |
++-------------------+                                         |
+                                                              |
+                                                              v
+                                                      +-------------------+
+                                                      |  AvailabilityStatus|
+                                                      |-------------------|
+                                                      | {Available/CheckedOut}|
+                                                      +-------------------+
+");
+
+        }
     }
 }
